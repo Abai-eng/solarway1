@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Solarway — PERFORMANCE (APES: Performance)</title>
+<meta name="description" content="Performance dashboard & calculator for solar systems — annual kWh, savings, CO2 reduction, tech specs. Use for sales, POC and proposals." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maxw:1200px;
+    --accent:#052c2a;
+    --accent-2:#ff8f3d;
+    --muted:#6b7280;
+    --card:#fff;
+    --bg:#f6fbfb;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:#07121a;line-height:1.45}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{font-weight:800;font-size:20px}
+  nav{display:flex;gap:10px}
+  nav button{background:transparent;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;color:var(--muted)}
+  h1{font-size:28px;margin:8px 0}
+  .lead{color:var(--muted)}
+  .panel{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 8px 24px rgba(11,18,34,0.06)}
+  .grid2{display:grid;grid-template-columns:1fr 420px;gap:16px;align-items:start}
+  @media(max-width:980px){.grid2{grid-template-columns:1fr}}
+  .kpis{display:flex;gap:12px;margin-top:12px}
+  .kpi{flex:1;background:linear-gradient(180deg,#fff,#fcfffd);padding:12px;border-radius:10px;text-align:center;border:1px solid #eef2f5}
+  .muted{color:var(--muted);font-size:13px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  input,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef0;font-size:14px}
+  label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+  .btn{padding:12px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:800}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-ghost{background:transparent;border:1px solid #eef2f5}
+  .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  @media(max-width:700px){.specs{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border:1px solid #f0f4f5;padding:8px;text-align:left}
+  .chart{display:flex;align-items:end;gap:6px;height:150px;padding:10px;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(11,18,34,0.04);margin-top:12px}
+  .bar{flex:1;background:linear-gradient(180deg,var(--accent-2),var(--accent));border-radius:4px;display:flex;align-items:flex-end;justify-content:center;color:#fff;font-size:12px;padding:6px 4px}
+  .small{font-size:13px;color:var(--muted)}
+  footer{margin-top:28px;color:var(--muted);text-align:center}
+  .download{display:inline-block;padding:8px 10px;border-radius:8px;background:#eef9f7;border:1px solid #dbf0eb}
+  .proof{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  @media(max-width:900px){.proof{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="brand">SOLARWAY — PERFORMANCE</div>
+        <div class="muted">APES — Performance (technical, measurable)</div>
+      </div>
+      <nav>
+        <button onclick="document.getElementById('calc').scrollIntoView({behavior:'smooth'})">Калькулятор</button>
+        <button onclick="document.getElementById('specs').scrollIntoView({behavior:'smooth'})">Тех-спецификации</button>
+        <button onclick="document.getElementById('proof').scrollIntoView({behavior:'smooth'})">Proof</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section style="margin-top:18px" class="panel">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+        <div>
+          <h1>Результат — в цифрах. Производительность, которую можно измерить.</h1>
+          <p class="lead">Давайте не спорить о внешности — покажем, сколько электроэнергии и денег вы получите. Примеры проектов: <strong>937 kW → ~1,200,000 kWh/год (оценка)</strong>. (Данные кейсов — solarway-a.kz)</p>
+          <div class="kpis" aria-hidden="false">
+            <div class="kpi"><div class="small">Типичный годовой выход</div><div style="font-weight:800;font-size:18px" id="kpi_energy">— kWh</div></div>
+            <div class="kpi"><div class="small">Ориентировочная экономия</div><div style="font-weight:800;font-size:18px" id="kpi_saving">— ₸/год</div></div>
+            <div class="kpi"><div class="small">CO₂ сокращение</div><div style="font-weight:800;font-size:18px" id="kpi_co2">— кг/год</div></div>
+          </div>
+        </div>
+        <div style="min-width:320px">
+          <div style="background:#fff;padding:12px;border-radius:10px;box-shadow:0 8px 24px rgba(11,18,34,0.06)">
+            <div style="font-size:13px;color:var(--muted)">Вводите реальные данные для вашего объекта:</div>
+            <div id="calc" style="margin-top:10px">
+              <label>Установленная мощность (kW DC)</label>
+              <input id="input_kw" type="number" value="100" min="0.1" step="0.1">
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <div style="flex:1">
+                  <label>Средние солн.часы/день</label>
+                  <input id="input_sun" type="number" value="4.5" step="0.1">
+                </div>
+                <div style="flex:1">
+                  <label>Performance ratio</label>
+                  <input id="input_pr" type="number" value="0.78" step="0.01">
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:10px">
+                <div style="flex:1">
+                  <label>КПД инвертора (%)</label>
+                  <input id="input_inv" type="number" value="98" step="0.1">
+                </div>
+                <div style="flex:1">
+                  <label>Цена эл-энергии (₸/kWh)</label>
+                  <input id="input_price" type="number" value="60" step="1">
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px">
+                <button class="btn btn-primary" onclick="computePerformance()">Посчитать</button>
+                <button class="btn btn-ghost" onclick="fillExample()">Пример: 937 kW</button>
+              </div>
+              <div id="calcMsg" class="small" style="margin-top:10px;color:var(--muted)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIFICATIONS -->
+    <section id="specs" style="margin-top:18px" class="panel">
+      <h2>Технические спецификации — что важно измерять</h2>
+      <div class="specs">
+        <div>
+          <h3 style="margin:6px 0">Параметры панелей</h3>
+          <table>
+            <thead><tr><th>Параметр</th><th>Значение (пример)</th></tr></thead>
+            <tbody>
+              <tr><td>Модель панелей</td><td>Jinko 540 Wp (пример)</td></tr>
+              <tr><td>Эффективность</td><td>21.2%</td></tr>
+              <tr><td>Темп деградации</td><td>0.5%/год</td></tr>
+              <tr><td>Гарантия мощности</td><td>25 лет (≥80%)</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px" class="small">Замените примеры на реальные модели, используемые вами. Вставьте PDF тех-листа по ссылке ниже.</div>
+          <div style="margin-top:10px"><a class="download" id="techPdf" href="PDF_REPLACE_TECHSHEET" target="_blank">Скачать tech-sheet (placeholder)</a></div>
+        </div>
+
+        <div>
+          <h3 style="margin:6px 0">Инверторы & монтаж</h3>
+          <table>
+            <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+            <tbody>
+              <tr><td>Тип инвертора</td><td>Sungrow / Huawei (пример)</td></tr>
+              <tr><td>Нагрузка MPPT</td><td>2–4 трекера</td></tr>
+              <tr><td>КПД инвертора</td><td>≥98%</td></tr>
+              <tr><td>Монтаж</td><td>Алюминиевая рамка, скрытые крепежи</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px" class="small">Добавьте реальные технические листы инверторов и монтажные инструкции.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF / CASES -->
+    <section id="proof" style="margin-top:18px">
+      <h2>Proof — реальные кейсы (числа)</h2>
+      <div class="proof">
+        <div class="panel">
+          <strong>Кейс: ТРЦ — 937 kW</strong>
+          <div class="small">Оценочная генерация: <strong>~1,200,000 kWh/год</strong> (пример — зависит от инсоляции). Экономия при цене 60 ₸/kWh: <strong>~72 000 000 ₸/год</strong>.</div>
+          <table style="margin-top:10px">
+            <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+            <tbody>
+              <tr><td>Мощность</td><td>937 kW</td></tr>
+              <tr><td>Генерация (оценка)</td><td>~1 200 000 kWh/год</td></tr>
+              <tr><td>Экономия (60 ₸/kWh)</td><td>~72 000 000 ₸/год</td></tr>
+              <tr><td>Окупаемость (по данным site)</td><td>≈ 2.9 года</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <strong>Кейс: Склад — 470 kW</strong>
+          <div class="small">Генерация: ~600 000 kWh/год (пример). Экономия: ~36 000 000 ₸/год (пример). Окупаемость ≈ 3.5 лет (по сайту).</div>
+          <table style="margin-top:10px">
+            <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+            <tbody>
+              <tr><td>Мощность</td><td>470 kW</td></tr>
+              <tr><td>Генерация</td><td>~600 000 kWh/год</td></tr>
+              <tr><td>Экономия</td><td>~36 000 000 ₸/год</td></tr>
+              <tr><td>Окупаемость</td><td>≈ 3.5 года</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="small" style="margin-top:12px">Данные кейсов и окупаемости — факты, взятые с публичного сайта Solarway-A (solarway-a.kz). Для коммерческого предложения используйте точную модель панелей + реальные погодные данные.</div>
+    </section>
+
+    <!-- Chart / Monthly profile demo -->
+    <section style="margin-top:18px" class="panel">
+      <h3>Месячный профиль выработки (пример)</h3>
+      <div id="monthChart" class="chart" role="img" aria-label="monthly generation chart">
+        <!-- bars will be injected by JS -->
+      </div>
+      <div class="small" style="margin-top:8px">График — пример распределения генерации по месяцам (нужно заменить на реальные метео-данные для точного P50/P90).</div>
+    </section>
+
+    <!-- CTA -->
+    <section style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px" class="panel">
+        <strong>Готовы измерить результат на вашем кровле?</strong>
+        <p class="muted">Закажите тех-аудит: мы привезём тепловизор/анализ площадки и дадим точный прогноз выработки и окупаемости.</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="requestAudit()">Заказать аудит</button>
+          <a class="download" href="PDF_REPLACE_CALCULATION_TEMPLATE" target="_blank">Скачать шаблон расчёта</a>
+        </div>
+      </div>
+      <div style="min-width:220px" class="small">
+        Телефон: <a href="tel:+77001255301">+7 700 125 53 01</a><br>
+        Email: <a href="mailto:info@solarway.kz">info@solarway.kz</a>
+      </div>
+    </section>
+
+    <footer><div class="muted" style="margin-top:18px;text-align:center">Performance demo — вставьте реальные тех-листы и погодные карты для финального расчёта P50 / P90.</div></footer>
+
+  </div>
+
+<script>
+/* ========================
+  Performance JS logic
+   - computePerformance() : reads inputs, computes annual kWh, saving, CO2,
+     updates KPI tiles and monthly chart
+   - monthly profile generated as sine-like distribution normalized to annual kWh
+   - fillExample() populates inputs with 937 kW demo
+   - requestAudit()/download placeholders
+   - Replace PDF_REPLACE_* and tech sheet links with your real URLs
+   ======================== */
+
+function computePerformance(){
+  const kw = parseFloat(document.getElementById('input_kw').value) || 0;
+  const sun = parseFloat(document.getElementById('input_sun').value) || 4.5;
+  const pr = parseFloat(document.getElementById('input_pr').value) || 0.78;
+  const invEff = (parseFloat(document.getElementById('input_inv').value) || 98) / 100;
+  const price = parseFloat(document.getElementById('input_price').value) || 60;
+
+  // annual energy (kWh/year) = system_kW * sun_hours/day * 365 * performance_ratio * inverter_efficiency
+  const annualKwh = kw * sun * 365 * pr * invEff;
+  const annualSaving = annualKwh * price; // ₸/year
+  const co2_per_kwh = 0.7; // kg CO2 per kWh — placeholder, change for your grid
+  const co2saved = annualKwh * co2_per_kwh;
+
+  // round
+  const ak = Math.round(annualKwh);
+  const asaved = Math.round(annualSaving);
+  const co2r = Math.round(co2saved);
+
+  document.getElementById('kpi_energy').textContent = ak.toLocaleString() + ' kWh/год';
+  document.getElementById('kpi_saving').textContent = asaved.toLocaleString() + ' ₸/год';
+  document.getElementById('kpi_co2').textContent = co2r.toLocaleString() + ' кг CO₂/год';
+
+  document.getElementById('calcMsg').textContent = `Расчёт по мощности ${kw} kW, ${sun} ч/д, PR ${pr}, инвертор ${Math.round(invEff*100)}% — итого ${ak.toLocaleString()} kWh/год`;
+
+  // monthly profile (simple model: multiply by month factor)
+  const monthlyFactors = getMonthlyFactors(); // array 12
+  const monthlyKwh = monthlyFactors.map(f => Math.round(f * annualKwh));
+  renderMonthlyChart(monthlyKwh);
+}
+
+// simple monthly distribution (normalized). Replace this with real meteorological data (e.g., PVGIS).
+function getMonthlyFactors(){
+  // synthetic: more in summer; values sum to 1
+  const base = [0.065,0.075,0.09,0.095,0.11,0.12,0.125,0.11,0.09,0.075,0.055,0.05];
+  const s = base.reduce((a,b)=>a+b,0);
+  return base.map(x=>x/s);
+}
+
+function renderMonthlyChart(values){
+  const chart = document.getElementById('monthChart');
+  chart.innerHTML = '';
+  const max = Math.max(...values);
+  for(let i=0;i<values.length;i++){
+    const v = values[i];
+    const h = Math.max(6, Math.round((v / max) * 140)); // bar height in px
+    const monthLabels = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.height = h + 'px';
+    bar.title = `${monthLabels[i]}: ${v.toLocaleString()} kWh`;
+    bar.innerHTML = `<div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;margin-bottom:4px">${Math.round(v/1000)}k</div>`;
+    chart.appendChild(bar);
+  }
+}
+
+function fillExample(){
+  document.getElementById('input_kw').value = 937;
+  document.getElementById('input_sun').value = 4.1;
+  document.getElementById('input_pr').value = 0.78;
+  document.getElementById('input_inv').value = 98;
+  document.getElementById('input_price').value = 60;
+  computePerformance();
+}
+
+function requestAudit(){
+  alert('Запрос аудита отправлен — ваш менеджер свяжется в течение 24ч. (Замените на реальную интеграцию с CRM).');
+}
+
+// init demo
+computePerformance();
+fillExample();
+
+/* ====== Integration notes for developer:
+ - Replace PDF_REPLACE_TECHSHEET and PDF_REPLACE_CALCULATION_TEMPLATE with real links.
+ - For accurate P50/P90 calculations use PVGIS/meteonorm or local meteorological data — monthlyFactors should be generated from that.
+ - For commercial proposals use panel/inverter real datasheets to compute degradation curve over years.
+ ====== */
+</script>
+</body>
+</html>
