@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Solarway — Appearance Hero (APES: Appearance)</title>
+<meta name="description" content="Appearance-focused landing mockup for Solarway — hero, before/after, portfolio. Replace placeholders with real photos from solarway-a.kz" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maxw:1200px; --accent:#0b3b2e; --accent-2:#ff7a3d; --muted:#6b7280;
+    --card:#ffffff; --bg:#fbfcfd;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:#06121a;line-height:1.4}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{font-weight:800;font-size:20px}
+  nav{display:flex;gap:10px}
+  nav button{background:transparent;border:0;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:600;color:var(--muted)}
+  .hero{margin-top:18px;background:linear-gradient(180deg,#ffffff, #f7fafc);border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(11,18,34,0.06)}
+  .hero-inner{display:grid;grid-template-columns:1fr 420px;gap:0;align-items:stretch}
+  @media(max-width:960px){.hero-inner{grid-template-columns:1fr}}
+  .hero-left{padding:36px}
+  .kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;font-size:13px}
+  h1{font-size:30px;margin:14px 0 10px}
+  p.lead{color:var(--muted);margin:0 0 18px}
+  .hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{padding:12px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:800}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-ghost{background:transparent;border:1px solid #eef2f5}
+  .hero-stats{display:flex;gap:12px;margin-top:18px}
+  .stat{background:#fff;padding:12px;border-radius:10px;min-width:120px;text-align:center;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+  .hero-right{position:relative;min-height:320px;background:#000}
+  .hero-image{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.85)}
+  .case-badge{position:absolute;left:18px;top:18px;background:rgba(255,255,255,0.95);padding:10px 12px;border-radius:12px;font-weight:700}
+  .beforeafter{margin-top:24px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .ba-wrap{flex:1;min-width:260px;background:var(--card);padding:10px;border-radius:12px;box-shadow:0 6px 20px rgba(11,18,34,0.04)}
+  .ba-image{width:100%;height:220px;object-fit:cover;border-radius:8px}
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+  @media(max-width:920px){.features{grid-template-columns:1fr}}
+  .feature{background:#fff;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+  .feature h4{margin:0 0 6px}
+  .portfolio{margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:920px){.portfolio{grid-template-columns:1fr}}
+  .card{background:#fff;padding:12px;border-radius:12px;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+  .card img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+  .card .meta{margin-top:8px;font-size:13px;color:var(--muted)}
+  footer{margin:28px 0 60px;color:var(--muted);text-align:center}
+  /* small helper for swapping images quickly: data-src used for real URL replacement */
+  .placeholder-note{font-size:13px;color:var(--muted);margin-top:8px}
+  /* slider styles */
+  .slider{position:relative;overflow:hidden;border-radius:8px}
+  .slider img{width:100%;height:260px;object-fit:cover;display:block;transition:opacity .3s}
+  .slider .handle{position:absolute;left:50%;top:0;bottom:0;width:4px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.2));transform:translateX(-50%);cursor:ew-resize}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="brand">SOLARWAY — PREMIUM APPEARANCE</div>
+        <div style="font-size:13px;color:var(--muted)">APES — Appearance (demo)</div>
+      </div>
+      <nav>
+        <button onclick="scrollTo('#features')">Features</button>
+        <button onclick="scrollTo('#portfolio')">Projects</button>
+        <button onclick="scrollTo('#contact')">Contact</button>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Appearance hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <span class="kicker">Appearance — Premium</span>
+          <h1>Как выглядит премиальная солнечная станция — продаёт сама</h1>
+          <p class="lead">Крупные проекты — не только цифры. Визуал, аккуратный монтаж и единый стиль фасада дают доверие инвестора и клиентов. (Данные проектов: 937 kW — окупаемость 2.9 года; 470 kW — 3.5 года). :contentReference[oaicite:2]{index=2}</p>
+
+          <div class="hero-ctas">
+            <button class="btn btn-primary" onclick="ctaRender()">Получить 2 рендера — бесплатно</button>
+            <button class="btn btn-ghost" onclick="scrollTo('#portfolio')">Смотреть проекты</button>
+          </div>
+
+          <div class="hero-stats" aria-hidden="false">
+            <div class="stat"><div style="font-size:12px;color:var(--muted)">Проекты</div><div style="font-weight:800">937 kW</div><div style="font-size:12px;color:var(--muted)">ТРЦ — окупаемость 2.9 года</div></div>
+            <div class="stat"><div style="font-size:12px;color:var(--muted)">Опыт</div><div style="font-weight:800">8 лет</div><div style="font-size:12px;color:var(--muted)">Гарантия до 12 лет</div></div>
+            <div class="stat"><div style="font-size:12px;color:var(--muted)">Цены</div><div style="font-weight:800">от 175 000 ₸/kW</div><div style="font-size:12px;color:var(--muted)">(сетевые)</div></div>
+          </div>
+
+          <!-- before/after demo -->
+          <div class="beforeafter" id="ba">
+            <div class="ba-wrap">
+              <strong>Before / After — визуал</strong>
+              <div class="slider" id="baSlider" style="margin-top:10px">
+                <!-- placeholders: replace data-before / data-after with real solarway images -->
+                <img id="baBefore" src="https://picsum.photos/id/1011/1200/800" alt="before">
+                <img id="baAfter" src="https://picsum.photos/id/1016/1200/800" alt="after" style="position:absolute;left:0;top:0;opacity:0">
+                <div class="handle" id="baHandle"></div>
+              </div>
+              <div class="placeholder-note">Замените эти изображения на реальные фотографии с сайта (инструкция ниже).</div>
+            </div>
+
+            <div style="min-width:260px">
+              <div class="feature" style="margin-bottom:12px">
+                <h4>Feature</h4>
+                <div class="small">Бесшовные монтажные ряды, скрытые крепления — гладкая поверхность.</div>
+              </div>
+              <div class="feature" style="margin-bottom:12px">
+                <h4>Advantage</h4>
+                <div class="small">Чистая геометрия и ровные ряды — выглядит как монолитная поверхность, а не набор панелей.</div>
+              </div>
+              <div class="feature">
+                <h4>Benefit</h4>
+                <div class="small">Инвесторы и покупатели видят качество — повышается доверие и цена объекта.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="hero-right">
+          <div class="case-badge">Кейс: ТРЦ — 937 kW • Экономия 61 170 000 ₸/год</div>
+          <!-- main hero image placeholder — replace with solarway image -->
+          <img id="heroImg" class="hero-image" src="https://picsum.photos/id/1043/1200/900" alt="solar project hero"
+               data-src-placeholder="replace-with-solarway-image-url" />
+        </aside>
+      </div>
+    </section>
+
+    <!-- Reasons / FAB -->
+    <section id="features">
+      <div class="features" style="margin-top:18px">
+        <div class="feature">
+          <h4>Feature — Премиальные материалы</h4>
+          <div class="small">Качественные панели и аккуратный подбор цвета рам — цельный вид фасада.</div>
+        </div>
+        <div class="feature">
+          <h4>Advantage — Долговечность и аккуратность</h4>
+          <div class="small">Меньше коррозии, ровные швы, стойкий цвет без пятен.</div>
+        </div>
+        <div class="feature">
+          <h4>Benefit — Социальное доказательство</h4>
+          <div class="small">Когда объект выглядит premium — вас воспринимают серьёзно, дорожают договоры и отклики инвесторов.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio (projects taken from solarway site data) -->
+    <section id="portfolio">
+      <h3 style="margin-top:20px">Проекты (реальные кейсы)</h3>
+      <div class="portfolio">
+        <div class="card">
+          <img data-src="REPLACE_IMG_937" src="https://picsum.photos/id/1005/800/600" alt="Mega project 937kW">
+          <div class="meta"><strong>ТРЦ Мега Шығыс — 937 kW</strong><div class="small">Окупаемость 2.9 года • Экономия 61 170 000 ₸/год. Источник: solarway-a.kz</div></div>
+        </div>
+
+        <div class="card">
+          <img data-src="REPLACE_IMG_470" src="https://picsum.photos/id/1012/800/600" alt="Warehouse 470kW">
+          <div class="meta"><strong>Склад — 470 kW</strong><div class="small">Окупаемость 3.5 года • Экономия 23 000 000 ₸/год. Источник: solarway-a.kz</div></div>
+        </div>
+
+        <div class="card">
+          <img data-src="REPLACE_IMG_100" src="https://picsum.photos/id/1025/800/600" alt="Halyk 100kW">
+          <div class="meta"><strong>Halyk Kazteleport — 100 kW</strong><div class="small">Окупаемость 5 лет • Экономия 4 185 000 ₸/год. Источник: solarway-a.kz</div></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--muted)">Данные кейсов и цифры взяты с публичного сайта компании Solarway-A. :contentReference[oaicite:3]{index=3}</div>
+    </section>
+
+    <!-- CTA / contact -->
+    <section id="contact" style="margin-top:20px">
+      <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+        <div style="flex:1;min-width:260px">
+          <div class="card">
+            <strong>Бесплатный рендер & быстрый расчёт</strong>
+            <p class="small">Получите 2 рендера вашего объекта + ориентировочный визуал — пришлите фото кровли/фасада.</p>
+            <form id="leadForm" onsubmit="handleLead(event)">
+              <input id="name" placeholder="Имя" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-top:8px">
+              <input id="phone" placeholder="Телефон" required style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-top:8px">
+              <div style="display:flex;gap:8px;margin-top:8px">
+                <button class="btn btn-primary" type="submit">Получить рендер</button>
+                <button class="btn btn-ghost" type="button" onclick="ctaRender()">Запросить рендер</button>
+              </div>
+              <div id="formMsg" style="margin-top:8px;color:var(--muted);font-size:13px"></div>
+            </form>
+          </div>
+        </div>
+        <div style="min-width:220px" class="small">
+          Телефон: <a href="tel:+77001255301">+7 700 125 53 01</a><br>
+          Email: <a href="mailto:info@solarway.kz">info@solarway.kz</a><br>
+          Источник данных на странице: solarway-a.kz. :contentReference[oaicite:4]{index=4}
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="small" style="margin-top:24px;color:var(--muted);text-align:center">Appearance demo — готово для замены изображений на реальные фотографии с сайта Solarway-A.</div>
+    </footer>
+  </div>
+
+<script>
+  // simple scroll helper
+  function scrollTo(sel){ const el=document.querySelector(sel); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+
+  // CTA handlers
+  function ctaRender(){ alert('Отправить заявку на 2 рендера — далее интегрируй с CRM или email.'); }
+
+  function handleLead(e){
+    e.preventDefault();
+    document.getElementById('formMsg').textContent = 'Спасибо! Мы свяжемся в течение 24 часов.';
+    // TODO: replace with real fetch-post to your backend / Formspree
+  }
+
+  // ---------- Before/After slider (simple horizontal drag) ----------
+  (function initBeforeAfter(){
+    const sliderWrap = document.getElementById('baSlider');
+    const before = document.getElementById('baBefore');
+    const after = document.getElementById('baAfter');
+    const handle = document.getElementById('baHandle');
+    let dragging = false;
+    let width = sliderWrap.clientWidth;
+
+    function setPos(percent){
+      percent = Math.max(0, Math.min(1, percent));
+      before.style.width = '100%';
+      after.style.opacity = percent;
+      handle.style.left = (percent*100) + '%';
+      after.style.clipPath = `inset(0 ${100 - percent*100}% 0 0)`;
+    }
+
+    // initialize
+    setPos(1); // fully after visible (user can drag)
+
+    handle.addEventListener('mousedown', ()=>dragging=true);
+    window.addEventListener('mouseup', ()=>dragging=false);
+    window.addEventListener('mousemove', (e)=>{
+      if(!dragging) return;
+      const rect = sliderWrap.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      setPos(pct);
+    });
+
+    // touch support
+    handle.addEventListener('touchstart', ()=>dragging=true);
+    window.addEventListener('touchend', ()=>dragging=false);
+    window.addEventListener('touchmove', (e)=>{
+      if(!dragging) return;
+      const touch = e.touches[0];
+      const rect = sliderWrap.getBoundingClientRect();
+      const pct = (touch.clientX - rect.left) / rect.width;
+      setPos(pct);
+    });
+  })();
+
+  // ------------- Quick helper: replace placeholders with real image URLs -------------
+  // You can copy-paste actual image URLs (from solarway site) into this map,
+  // keys: REPLACE_IMG_937, REPLACE_IMG_470, REPLACE_IMG_100, and hero/ba images.
+  const REPLACE_MAP = {
+    "REPLACE_IMG_937": "", // paste direct image URL here
+    "REPLACE_IMG_470": "",
+    "REPLACE_IMG_100": "",
+    "HERO_IMG": "",
+    "BA_BEFORE": "",
+    "BA_AFTER": ""
+  };
+
+  function swapImagesFromMap(){
+    // cards
+    document.querySelectorAll('[data-src]').forEach(img=>{
+      const key = img.getAttribute('data-src');
+      if(REPLACE_MAP[key]) img.src = REPLACE_MAP[key];
+    });
+    // hero
+    if(REPLACE_MAP.HERO_IMG) document.getElementById('heroImg').src = REPLACE_MAP.HERO_IMG;
+    if(REPLACE_MAP.BA_BEFORE) document.getElementById('baBefore').src = REPLACE_MAP.BA_BEFORE;
+    if(REPLACE_MAP.BA_AFTER) document.getElementById('baAfter').src = REPLACE_MAP.BA_AFTER;
+  }
+
+  // auto-run if you filled REPLACE_MAP above
+  swapImagesFromMap();
+
+  // Note: to get real image URLs from the site: open solarway-a.kz -> right-click image -> "Open image in new tab" -> copy URL -> paste into REPLACE_MAP (exact instructions below).
+</script>
+</body>
+</html>
