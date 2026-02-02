@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Solarway — Economical (Payback, TCO, Financing)</title>
+<meta name="description" content="Payback & TCO calculator for solar systems — compute CAPEX, OPEX, payback, ROI, NPV, financing schedule and download CSV." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --maxw:1200px;
+  --bg:#fbfcfd;
+  --card:#ffffff;
+  --muted:#6b7280;
+  --accent:#0b3b2e;
+  --accent-2:#ff7a3d;
+  font-family:Inter,system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#07121a;line-height:1.45}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;font-size:20px}
+.lead{color:var(--muted)}
+.panel{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 10px 30px rgba(11,18,34,0.05)}
+.grid2{display:grid;grid-template-columns:1fr 420px;gap:16px;align-items:start}
+@media(max-width:980px){.grid2{grid-template-columns:1fr}}
+.label{font-size:13px;color:var(--muted);margin-bottom:6px;display:block}
+.input{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef0;font-size:14px}
+.row{display:flex;gap:8px;align-items:center}
+.btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:800}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:transparent;border:1px solid #eef2f5}
+.kpi-row{display:flex;gap:12px;margin-top:12px}
+.kpi{flex:1;background:linear-gradient(180deg,#fff,#f7fffb);padding:12px;border-radius:10px;text-align:center;border:1px solid #eef2f5}
+.small{font-size:13px;color:var(--muted)}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th,.table td{border:1px solid #f0f4f5;padding:8px;text-align:right;font-size:13px}
+.table th{text-align:left;background:#fafafa}
+.chart{display:flex;gap:6px;align-items:end;height:160px;margin-top:12px;padding:8px;background:#fff;border-radius:8px;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+.bar{flex:1;background:linear-gradient(180deg,var(--accent-2),var(--accent));border-radius:6px;display:flex;align-items:flex-end;justify-content:center;color:#fff;font-size:12px;padding:6px}
+.download{display:inline-block;padding:8px 10px;border-radius:8px;background:#eef9f7;border:1px solid #dbf0eb;color:var(--accent)}
+.notice{font-size:13px;color:var(--muted);margin-top:8px}
+.footer{margin-top:20px;color:var(--muted);text-align:center;padding-bottom:40px}
+
+/* responsive small */
+@media(max-width:720px){
+  .kpi-row{flex-direction:column}
+  .row{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div>
+        <div class="brand">SOLARWAY — ECONOMICAL</div>
+        <div class="small">Payback • TCO • Financing — покажем реальные деньги</div>
+      </div>
+      <div>
+        <button class="btn btn-ghost" onclick="fillExample937()">Пример 937 kW</button>
+        <button class="btn btn-ghost" onclick="fillExample470()">Пример 470 kW</button>
+      </div>
+    </header>
+
+    <section style="margin-top:18px" class="panel grid2">
+      <!-- LEFT: inputs and results -->
+      <div>
+        <h2>Считаем окупаемость прямо сейчас</h2>
+        <p class="lead">Вводи реальные числа — получишь payback, ROI, NPV и график cashflow. Это продаёт. Не мнения — цифры.</p>
+
+        <!-- Inputs -->
+        <div style="margin-top:12px" class="panel">
+          <h3 style="margin:0 0 8px">Входные параметры</h3>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+            <div>
+              <label class="label">Установленная мощность (kW)</label>
+              <input id="sys_kw" class="input" type="number" value="100" min="0.1" step="0.1">
+            </div>
+            <div>
+              <label class="label">Цена установки (₸/kW) — CAPEX per kW</label>
+              <input id="capex_per_kw" class="input" type="number" value="175000" step="1000">
+            </div>
+
+            <div>
+              <label class="label">Средние солн. часы / день</label>
+              <input id="sun_hours" class="input" type="number" value="4.5" step="0.1">
+            </div>
+            <div>
+              <label class="label">Цена электроэнергии (₸/kWh)</label>
+              <input id="price_kwh" class="input" type="number" value="60" step="1">
+            </div>
+
+            <div>
+              <label class="label">Performance ratio (PR)</label>
+              <input id="pr" class="input" type="number" value="0.78" step="0.01">
+            </div>
+            <div>
+              <label class="label">Инвертор КПД (%)</label>
+              <input id="inv_eff" class="input" type="number" value="98" step="0.1">
+            </div>
+
+            <div>
+              <label class="label">Ежегодное O&M (% от CAPEX)</label>
+              <input id="oandm_pct" class="input" type="number" value="1.5" step="0.1">
+            </div>
+            <div>
+              <label class="label">Срок проекта (лет)</label>
+              <input id="lifetime" class="input" type="number" value="25" step="1">
+            </div>
+
+            <div>
+              <label class="label">Субсидии / гранты (₸)</label>
+              <input id="subsidy" class="input" type="number" value="0" step="1000">
+            </div>
+            <div>
+              <label class="label">Скидка / налоговый кредит (₸)</label>
+              <input id="tax_credit" class="input" type="number" value="0" step="1000">
+            </div>
+
+            <div>
+              <label class="label">Ввод годовой генерации вручную (kWh/год) — необязательно</label>
+              <input id="manual_kwh" class="input" type="number" placeholder="оставьте пустым чтобы вычислить">
+              <div class="small">Если заполнено, будет использовано вместо расчёта из kW</div>
+            </div>
+            <div>
+              <label class="label">Ставка дисконтирования (%) для NPV</label>
+              <input id="discount" class="input" type="number" value="10" step="0.1">
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn btn-primary" onclick="computeEconomics()">Посчитать</button>
+            <button class="btn btn-ghost" onclick="resetInputs()">Сбросить</button>
+            <button class="btn btn-ghost" onclick="downloadCSV()" id="dlBtn">Скачать CSV</button>
+          </div>
+          <div id="calcNote" class="notice">Подсчёт основан на простых предположениях — для финального КП возьмём реальные P50/P90 и тех-листы.</div>
+        </div>
+
+        <!-- Results KPIs -->
+        <div class="kpi-row" style="margin-top:12px">
+          <div class="kpi">
+            <div class="small">Генерация / год</div>
+            <div id="res_gen" style="font-weight:800;font-size:18px">— kWh</div>
+            <div class="small">kWh/год</div>
+          </div>
+          <div class="kpi">
+            <div class="small">Экономия / год</div>
+            <div id="res_saving" style="font-weight:800;font-size:18px">— ₸</div>
+            <div class="small">₸/год</div>
+          </div>
+          <div class="kpi">
+            <div class="small">Окупаемость</div>
+            <div id="res_payback" style="font-weight:800;font-size:18px">— лет</div>
+            <div class="small">payback (approx)</div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div id="cashChart" class="chart panel" style="margin-top:12px">
+          <!-- bars injected by JS -->
+        </div>
+
+        <!-- Yearly table -->
+        <div style="margin-top:12px" class="panel">
+          <h4 style="margin:0 0 8px">Годовая таблица — TCO & cashflow</h4>
+          <div style="overflow:auto;max-height:260px">
+            <table class="table" id="tcoTable">
+              <thead><tr><th>Год</th><th>Генерация (kWh)</th><th>Экономия (₸)</th><th>O&M (₸)</th><th>Чистый поток (₸)</th><th>Кумулятивный (₸)</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: financing and quick calculators -->
+      <aside>
+        <div class="panel">
+          <h3 style="margin:0 0 8px">Финансирование / Платёж</h3>
+          <div>
+            <label class="label">Downpayment (%)</label>
+            <input id="down_pct" class="input" type="number" value="20" step="1">
+            <label class="label" style="margin-top:8px">Кредит: Годовая ставка (%)</label>
+            <input id="loan_rate" class="input" type="number" value="12" step="0.1">
+            <label class="label" style="margin-top:8px">Срок кредита (лет)</label>
+            <input id="loan_term" class="input" type="number" value="5" step="1">
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="btn btn-primary" onclick="computeLoan()">Рассчитать платёж</button>
+              <button class="btn btn-ghost" onclick="clearLoan()">Очистить</button>
+            </div>
+            <div style="margin-top:12px" class="small">Ежемесячный платёж: <span id="loanMonthly" style="font-weight:800">—</span></div>
+            <div style="margin-top:6px" class="small">Общий платёж за срок: <span id="loanTotal" style="font-weight:800">—</span></div>
+          </div>
+
+          <hr style="margin:12px 0" />
+
+          <h4 style="margin:0 0 8px">Quick-scenarios</h4>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-ghost" onclick="scenario('cheap')">Low CAPEX (от 150k ₸/kW)</button>
+            <button class="btn btn-ghost" onclick="scenario('base')">Base (175k ₸/kW)</button>
+            <button class="btn btn-ghost" onclick="scenario('premium')">Premium (220k ₸/kW)</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <h4 style="margin:0 0 8px">Итоговые метрики</h4>
+          <div class="small">ROI (за life): <span id="out_roi" style="font-weight:800">—</span></div>
+          <div class="small">NPV (@discount): <span id="out_npv" style="font-weight:800">—</span></div>
+          <div class="small">TCO (sum O&M + CAPEX - subsidies): <span id="out_tco" style="font-weight:800">—</span></div>
+          <div style="margin-top:12px">
+            <button class="btn btn-primary" onclick="requestQuote()">Запросить коммерческое предложение</button>
+            <button class="btn btn-ghost" onclick="downloadCSV()" style="margin-left:8px">Экспорт CSV</button>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <div class="small">Подсказка: если payback < 36 мес — это хороший коммерческий кейс. Дай клиенту цифру — закрой сделку.</div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <div class="small">Economical demo — integrable with CRM. Replace placeholder defaults with real quotes from Solarway-A (solarway-a.kz).</div>
+    </footer>
+  </div>
+
+<script>
+/* =========================
+  Economical page JS
+  ========================= */
+
+function n(num){ return Number(num) || 0; }
+function fmt(numb){ return Math.round(numb).toLocaleString(); }
+
+/* compute annual generation if manual_kwh empty */
+function computeAnnualKwhFromKW(kw, sunHours, pr, invEff){
+  // annual kWh = kw * sunHours/day * 365 * PR * invEff
+  return kw * sunHours * 365 * pr * (invEff/100);
+}
+
+function computeEconomics(){
+  // inputs
+  const kw = n(document.getElementById('sys_kw').value);
+  const capexPerKw = n(document.getElementById('capex_per_kw').value);
+  const sun = n(document.getElementById('sun_hours').value);
+  const priceKwh = n(document.getElementById('price_kwh').value);
+  const pr = n(document.getElementById('pr').value);
+  const invEff = n(document.getElementById('inv_eff').value);
+  const oandmPct = n(document.getElementById('oandm_pct').value) / 100;
+  const life = Math.max(1, n(document.getElementById('lifetime').value));
+  const subsidy = n(document.getElementById('subsidy').value);
+  const taxCredit = n(document.getElementById('tax_credit').value);
+  const discount = n(document.getElementById('discount').value)/100;
+  const manualKwh = n(document.getElementById('manual_kwh').value);
+
+  // compute annual generation
+  const annualKwh = manualKwh > 0 ? manualKwh : computeAnnualKwhFromKW(kw, sun, pr, invEff);
+
+  // CAPEX total
+  const capexTotal = kw * capexPerKw;
+  const capexNet = Math.max(0, capexTotal - subsidy - taxCredit);
+
+  // annual saving
+  const annualSaving = annualKwh * priceKwh;
+
+  // annual O&M
+  const annualOandM = capexTotal * oandmPct;
+
+  // net annual cashflow
+  const netAnnual = annualSaving - annualOandM;
+
+  // payback in years
+  const paybackYears = netAnnual > 0 ? capexNet / netAnnual : Infinity;
+
+  // TCO over life: sum O&M over years + capexNet (not discounting here)
+  const totalOandM = annualOandM * life;
+  const tco = capexNet + totalOandM;
+
+  // ROI over life
+  const totalNet = netAnnual * life;
+  const roi = capexNet > 0 ? ((totalNet - capexNet) / capexNet) : Infinity;
+
+  // NPV
+  let npv = -capexNet;
+  for(let t=1;t<=life;t++){
+    npv += netAnnual / Math.pow(1 + discount, t);
+  }
+
+  // prepare yearly table and chart values
+  const rows = [];
+  let cumulative = -capexNet;
+  for(let y=1;y<=life;y++){
+    const gen = annualKwh; // ignoring degradation here; could apply degrade%
+    const saving = gen * priceKwh;
+    const oam = annualOandM;
+    const net = saving - oam;
+    cumulative += net;
+    const disc = net / Math.pow(1 + discount, y);
+    rows.push({year:y,gen, saving, oam, net, cumulative, disc});
+  }
+
+  // update UI
+  document.getElementById('res_gen').textContent = fmt(annualKwh) + ' kWh';
+  document.getElementById('res_saving').textContent = fmt(annualSaving) + ' ₸';
+  document.getElementById('res_payback').textContent = (paybackYears===Infinity? '—' : paybackYears.toFixed(1));
+
+  document.getElementById('out_roi').textContent = (roi===Infinity? '—' : (roi*100).toFixed(1) + '%');
+  document.getElementById('out_npv').textContent = (npv < 0 ? '-' : '') + fmt(npv) + ' ₸';
+  document.getElementById('out_tco').textContent = fmt(tco) + ' ₸';
+
+  renderTcoTable(rows);
+  renderCashChart(rows);
+
+  // store last calculation for CSV download
+  window.lastEconomics = {inputs:{
+    kw, capexPerKw, sun, priceKwh, pr, invEff, oandmPct, life, subsidy, taxCredit, discount
+  }, rows, summary:{
+    annualKwh, annualSaving, annualOandM, capexTotal, capexNet, paybackYears, tco, npv, roi
+  }};
+
+  // enable download button
+  document.getElementById('dlBtn').disabled = false;
+}
+
+function renderTcoTable(rows){
+  const tbody = document.querySelector('#tcoTable tbody');
+  tbody.innerHTML = '';
+  rows.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="text-align:left">${r.year}</td>
+      <td>${fmt(r.gen)}</td>
+      <td>${fmt(r.saving)}</td>
+      <td>${fmt(r.oam)}</td>
+      <td>${fmt(r.net)}</td>
+      <td>${fmt(r.cumulative)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderCashChart(rows){
+  const chart = document.getElementById('cashChart');
+  chart.innerHTML = '';
+  const max = Math.max(...rows.map(r=>Math.abs(r.net))) || 1;
+  rows.forEach(r=>{
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    const pct = Math.abs(r.net)/max;
+    const height = Math.max(6, Math.round(pct * 140));
+    bar.style.height = height + 'px';
+    bar.title = `Year ${r.year}: net ${fmt(r.net)} ₸`;
+    bar.textContent = Math.round(r.net/1000) + 'k';
+    chart.appendChild(bar);
+  });
+}
+
+/* loan/finance */
+function computeLoan(){
+  const capexPerKw = n(document.getElementById('capex_per_kw').value);
+  const kw = n(document.getElementById('sys_kw').value);
+  const capexTotal = kw * capexPerKw;
+  const downPct = n(document.getElementById('down_pct').value)/100;
+  const loanAmount = capexTotal * (1 - downPct);
+  const annualRate = n(document.getElementById('loan_rate').value)/100;
+  const termYears = n(document.getElementById('loan_term').value);
+  const monthlyRate = annualRate/12;
+  const months = termYears * 12;
+  if(loanAmount <= 0 || months <=0){ alert('Проверьте сумму кредита и срок'); return; }
+  // monthly payment formula
+  const r = monthlyRate;
+  const P = (r * loanAmount) / (1 - Math.pow(1 + r, -months));
+  const total = P * months;
+  document.getElementById('loanMonthly').textContent = fmt(P) + ' ₸/мес';
+  document.getElementById('loanTotal').textContent = fmt(total) + ' ₸';
+  // store
+  window.lastLoan = {loanAmount, monthlyPayment:P, totalPaid:total, months};
+}
+
+/* CSV download */
+function downloadCSV(){
+  if(!window.lastEconomics){ alert('Сначала нажмите "Посчитать"'); return; }
+  const rows = window.lastEconomics.rows;
+  let csv = 'Year,Generation_kWh,Saving_TG,OandM_TG,NetCash_TG,Cumulative_TG\n';
+  rows.forEach(r=>{
+    csv += `${r.year},${Math.round(r.gen)},${Math.round(r.saving)},${Math.round(r.oam)},${Math.round(r.net)},${Math.round(r.cumulative)}\n`;
+  });
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'tco_payback.csv';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* scenarios */
+function scenario(type){
+  if(type==='cheap'){ document.getElementById('capex_per_kw').value = 150000; }
+  if(type==='base'){ document.getElementById('capex_per_kw').value = 175000; }
+  if(type==='premium'){ document.getElementById('capex_per_kw').value = 220000; }
+  computeEconomics();
+}
+
+/* fill examples quick */
+function fillExample937(){
+  document.getElementById('sys_kw').value = 937;
+  document.getElementById('capex_per_kw').value = 175000;
+  document.getElementById('sun_hours').value = 4.1;
+  document.getElementById('price_kwh').value = 60;
+  document.getElementById('pr').value = 0.78;
+  document.getElementById('inv_eff').value = 98;
+  computeEconomics();
+}
+function fillExample470(){
+  document.getElementById('sys_kw').value = 470;
+  document.getElementById('capex_per_kw').value = 175000;
+  document.getElementById('sun_hours').value = 4.3;
+  document.getElementById('price_kwh').value = 60;
+  computeEconomics();
+}
+
+/* helpers */
+function resetInputs(){
+  document.querySelectorAll('input').forEach(i=>{ /* minimal reset to defaults */ });
+  // just reload defaults (simple)
+  location.reload();
+}
+
+function clearLoan(){
+  document.getElementById('loanMonthly').textContent = '—';
+  document.getElementById('loanTotal').textContent = '—';
+}
+
+/* Request / CTA placeholders */
+function requestQuote(){
+  alert('Запрос коммерческого предложения отправлен. Менеджер свяжется в течение 24 часов. (Интегрируйте сюда form->CRM).');
+}
+
+/* initial compute */
+computeEconomics();
+
+</script>
+</body>
+</html>
