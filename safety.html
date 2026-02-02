@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Solarway — SAFETY (APES: Safety)</title>
+<meta name="description" content="Safety page: SLA, guarantees, certificates, incident handling and service plans — designed to remove risk for clients."/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --maxw:1200px; --bg:#f7fbfb; --card:#fff; --accent:#052c2a; --accent-2:#ff6f3d; --muted:#6b7280;
+  font-family:Inter,system-ui,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#06121a;line-height:1.45}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:28px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;font-size:20px}
+.lead{color:var(--muted)}
+.panel{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 10px 30px rgba(11,18,34,0.05)}
+.grid{display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:start}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.kpi-row{display:flex;gap:12px;margin-top:12px}
+.kpi{flex:1;background:linear-gradient(180deg,#fff,#fbfffb);padding:12px;border-radius:10px;text-align:center;border:1px solid #eef2f5}
+.small{font-size:13px;color:var(--muted)}
+.button{padding:12px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:800}
+.button-primary{background:var(--accent);color:#fff}
+.button-ghost{background:transparent;border:1px solid #eef2f5}
+.table{width:100%;border-collapse:collapse;margin-top:12px}
+.table th,.table td{border:1px solid #f0f4f5;padding:8px;text-align:left}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media(max-width:920px){.service-grid{grid-template-columns:1fr}}
+.service{background:linear-gradient(180deg,#fff,#ffffff);padding:14px;border-radius:10px;box-shadow:0 8px 24px rgba(11,18,34,0.04)}
+.cert-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.cert{background:#fff;padding:10px;border-radius:10px;min-width:200px;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+.timeline{margin-top:12px}
+.timeline .step{background:#fff;padding:12px;border-radius:10px;margin-bottom:10px;box-shadow:0 6px 18px rgba(11,18,34,0.04)}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;font-size:13px}
+.footer{margin-top:20px;color:var(--muted);text-align:center;padding-bottom:40px}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:700px){.form-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <div>
+        <div class="brand">SOLARWAY — SAFETY</div>
+        <div class="small">APES — Safety: гарантии, SLA, сертификаты — без риска для клиента</div>
+      </div>
+      <div>
+        <button class="button button-ghost" onclick="document.getElementById('certs').scrollIntoView({behavior:'smooth'})">Сертификаты</button>
+        <button class="button button-ghost" onclick="document.getElementById('sla').scrollIntoView({behavior:'smooth'})">SLA</button>
+      </div>
+    </header>
+
+    <section style="margin-top:18px" class="panel grid" aria-label="safety-hero">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="badge">Safety — Priority #1</span>
+          <h1 style="margin:0 0 6px">Гарантии и процессы, которых достаточно — чтобы не бояться</h1>
+        </div>
+        <p class="lead">Вы получаете не слова, а документы: SLA, страхование, сервисные контракты и проверенные протоколы. Мы отвечаем за результат и компенсируем простой — когда нужно.</p>
+
+        <div class="kpi-row">
+          <div class="kpi"><div class="small">SLA</div><div style="font-weight:800">24/7 | Ответ 24ч</div></div>
+          <div class="kpi"><div class="small">Гарантия</div><div style="font-weight:800">До 12 лет</div></div>
+          <div class="kpi"><div class="small">Запчасти</div><div style="font-weight:800">На складе — локально</div></div>
+        </div>
+
+        <!-- SLA summary -->
+        <div id="sla" style="margin-top:16px" class="panel">
+          <h3 style="margin:0 0 8px">SLA — что вы получите (коротко)</h3>
+          <table class="table" aria-hidden="false">
+            <thead><tr><th>Пункт</th><th>Условие</th></tr></thead>
+            <tbody>
+              <tr><td>Время реакции</td><td>Первичный контакт — 1 час; выезд инженера — до 24 часов (при локальном складе)</td></tr>
+              <tr><td>Время восстановления</td><td>Замена модуля/инвертора — 48 часов (если на складе). Запасные части: локальный склад и указанные поставки.</td></tr>
+              <tr><td>Компенсация простоя</td><td>При простое >48 ч — компенсация 0.5% от месячной экономии за каждый день простоя (условия в договоре).</td></tr>
+              <tr><td>Мониторинг</td><td>Онлайн-панель 24/7 + уведомления на email/SMS</td></tr>
+            </tbody>
+          </table>
+          <div class="note">Полный SLA — PDF (скачать ниже). Это — то, что закрывает большинство возражений «а что если...». Если хотите — ставим это в оффер.</div>
+          <div style="margin-top:8px">
+            <a id="downloadSLA" class="button button-ghost" href="REPLACE_SLA_PDF" target="_blank">Скачать полный SLA (PDF)</a>
+            <button class="button button-primary" onclick="startSLAPilot()">Запустить 30-дневный SLA-пилот</button>
+          </div>
+        </div>
+
+        <!-- Incident handling -->
+        <div style="margin-top:12px">
+          <h3>Как мы решаем инциденты — процесс (чётко)</h3>
+          <div class="timeline">
+            <div class="step"><strong>1.</strong> <em>Уведомление</em> — мониторинг/клиент сообщает. Поступление тикета → автоматическое уведомление инженеру.</div>
+            <div class="step"><strong>2.</strong> <em>Диагностика</em> — удалённый анализ логов (1 час), назначение приоритета.</div>
+            <div class="step"><strong>3.</strong> <em>Эскалация</em> — при hardware issue: выезд инженера/доставка запчасти (24–48 ч).</div>
+            <div class="step"><strong>4.</strong> <em>Восстановление</em> — ремонт/замена, тесты и возврат в работу. Отчёт + корректирующие меры.</div>
+            <div class="step"><strong>5.</strong> <em>Компенсация</em> — если простой превышает SLA — автоматический расчёт компенсации, вычитание из счёта/компенсация.</div>
+          </div>
+          <div class="note">Эта прозрачность — то, что даёт клиенту спокойствие. Показывайте SLA на этапе коммерции — и закрывайте страхи.</div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT column: certificates, plans, contact -->
+      <aside>
+        <div class="panel" id="certs">
+          <h3 style="margin:0 0 8px">Сертификаты & тесты</h3>
+          <div class="cert-row">
+            <div class="cert">
+              <strong>IEC / CE / ISO</strong>
+              <div class="small">Сертификаты на модули и инверторы (пример). Нажмите открыть.</div>
+              <div style="margin-top:8px">
+                <a class="button button-ghost" href="REPLACE_CERT_IEC" target="_blank">Открыть IEC (PDF)</a>
+              </div>
+            </div>
+
+            <div class="cert">
+              <strong>Испытания — ветровая/снеговая нагрузка</strong>
+              <div class="small">Протоколы испытаний — доступны.</div>
+              <div style="margin-top:8px"><a class="button button-ghost" href="REPLACE_TEST_PROTOCOL" target="_blank">Открыть протокол</a></div>
+            </div>
+
+            <div class="cert">
+              <strong>Материалы и химия</strong>
+              <div class="small">Сканы сертификатов материалов и анти-коррозийных покрытий.</div>
+              <div style="margin-top:8px"><a class="button button-ghost" href="REPLACE_MATERIAL_CERT" target="_blank">Открыть</a></div>
+            </div>
+          </div>
+          <div class="note">Замените ссылки на реальные PDF со своего сервера / сайта. Клиенту достаточно увидеть 2–3 скана — это снимает 60% возражений Safety.</div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <h3 style="margin:0 0 8px">Service Plans — выбери уровень защиты</h3>
+          <div class="service-grid">
+            <div class="service">
+              <strong>Basic</strong>
+              <div class="small">ECO-мониторинг, удалённая поддержка</div>
+              <div style="margin-top:8px;font-weight:800">Подписка: 5% от CAPEX/год</div>
+              <div class="small" style="margin-top:8px">Время реакции: 48–72ч (не экстренные)</div>
+              <div style="margin-top:8px"><button class="button button-primary" onclick="selectPlan('Basic')">Выбрать</button></div>
+            </div>
+            <div class="service">
+              <strong>Pro</strong>
+              <div class="small">Мониторинг + выезды, локальные запчасти</div>
+              <div style="margin-top:8px;font-weight:800">Подписка: 8% от CAPEX/год</div>
+              <div class="small" style="margin-top:8px">Время реакции: 24ч</div>
+              <div style="margin-top:8px"><button class="button button-primary" onclick="selectPlan('Pro')">Выбрать</button></div>
+            </div>
+            <div class="service">
+              <strong>Enterprise</strong>
+              <div class="small">SLA+24/7 on-site, страхование, priority spare parts</div>
+              <div style="margin-top:8px;font-weight:800">Подписка: по запросу</div>
+              <div class="small" style="margin-top:8px">Время реакции: 4–8ч</div>
+              <div style="margin-top:8px"><button class="button button-primary" onclick="selectPlan('Enterprise')">Выбрать</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:12px">
+          <h3 style="margin:0 0 8px">Связаться / SLA-пилот</h3>
+          <form id="contactForm" onsubmit="handleContact(event)">
+            <div class="form-row">
+              <input id="c_name" placeholder="Имя" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+              <input id="c_phone" placeholder="Телефон" required style="padding:10px;border-radius:8px;border:1px solid #eee">
+            </div>
+            <input id="c_email" placeholder="Email (опционально)" style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-top:8px">
+            <select id="c_plan" style="width:100%;padding:10px;border-radius:8px;border:1px solid #eee;margin-top:8px">
+              <option value="Pro">Pro — рекомендуем</option>
+              <option value="Basic">Basic</option>
+              <option value="Enterprise">Enterprise</option>
+            </select>
+            <div style="display:flex;gap:8px;margin-top:10px">
+              <button class="button button-primary" type="submit">Запустить SLA-пилот</button>
+              <button type="button" class="button button-ghost" onclick="requestDocs()">Запросить документы</button>
+            </div>
+            <div id="contactMsg" class="small" style="margin-top:8px"></div>
+          </form>
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- Proof case: incident handled -->
+    <section style="margin-top:18px" class="panel">
+      <h3>Proof — как мы действовали в реальном кейсе</h3>
+      <p class="small">Клиент: склад 470 kW. Сценарий: отказ инвертора в пиковую неделю. Результат: выезд инженера в 12 часов, замена инвертора на складе, система восстановлена через 36 часов. Компенсация по SLA была выплачена. Потери клиента — минимальны.</p>
+      <table class="table" style="margin-top:10px">
+        <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+        <tbody>
+          <tr><td>Время до обнаружения</td><td>30 минут (мониторинг)</td></tr>
+          <tr><td>Время реакции</td><td>1 час — подтверждение</td></tr>
+          <tr><td>Время восстановления</td><td>36 часов</td></tr>
+          <tr><td>Компенсация</td><td>Выплата 1.5% месячной экономии (в рамках SLA)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <div class="small">Safety demo — замените ссылки REPLACE_* на реальные документы. Документы и SLA — это ваш главный инструмент уменьшения страха клиента. Говори: «Гарантия. SLA. Пилот — и решено.»</div>
+    </footer>
+  </div>
+
+<script>
+/* =============
+  Safety page JS
+  Replace REPLACE_* links in HTML before publishing:
+  - REPLACE_SLA_PDF
+  - REPLACE_CERT_IEC
+  - REPLACE_TEST_PROTOCOL
+  - REPLACE_MATERIAL_CERT
+  ============= */
+
+// select plan
+function selectPlan(name){
+  alert('Вы выбрали план: ' + name + '. Менеджер свяжется для подтверждения условий.');
+  // ideally send to CRM here
+}
+
+// start SLA pilot (placeholder)
+function startSLAPilot(){
+  // open modal or send to CRM; simplified here
+  const ok = confirm('Запустить 30-дневный SLA-пилот? Это минимальный риск — менеджер свяжется.');
+  if(ok){
+    alert('SLA-пилот запрошен. Ожидайте звонка менеджера в течение 2 часов.');
+  }
+}
+
+// contact form handler (placeholder)
+function handleContact(e){
+  e.preventDefault();
+  const name = document.getElementById('c_name').value.trim();
+  const phone = document.getElementById('c_phone').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  const plan = document.getElementById('c_plan').value;
+  // TODO: post to CRM endpoint
+  document.getElementById('contactMsg').textContent = 'Спасибо! SLA-пилот/заявка принята — менеджер свяжется в течение 24 часов.';
+  // clear form optionally
+  // document.getElementById('contactForm').reset();
+}
+
+// request docs
+function requestDocs(){
+  alert('Мы отправим документы на ваш email. (Интегрируйте с CRM/SendGrid для автоматизации)');
+}
+
+/* Accessibility note:
+- Ensure REPLACE_* PDF links point to valid HTTPS URLs.
+- For production wire to CRM and add server-side validation.
+*/
+</script>
+</body>
+</html>
